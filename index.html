@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Metaballo &mdash; The Art of Transformation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0d0807;
+    --bg-soft: #140c0a;
+    --cream: #ead8c6;
+    --cream-dim: rgba(234, 216, 198, 0.72);
+    --cream-faint: rgba(234, 216, 198, 0.45);
+    --peach: #f1b89a;
+    --peach-hover: #f5c6ac;
+    --rule: rgba(234, 216, 198, 0.18);
+    --serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --sans: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- NAVIGATION ---------- */
+  .nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 56px;
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: 0.32em;
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 44px;
+    margin-left: 60px;
+    margin-right: auto;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--peach); }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid var(--peach);
+    color: var(--peach);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    background: var(--peach);
+    color: var(--bg);
+  }
+
+  .btn-solid {
+    background: var(--peach);
+    color: #2a1810;
+  }
+
+  .btn-solid:hover {
+    background: var(--peach-hover);
+    color: #2a1810;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 760px;
+    overflow: hidden;
+    background-color: #1a0a06;
+  }
+
+  /* Hero background — warm ambient gradient (no image required).
+     Drop a photo at assets/hero.jpg and uncomment the url() line below to swap in a photograph. */
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background-image:
+      /* url('assets/hero.jpg'), */
+      radial-gradient(ellipse 55% 40% at 50% 38%, rgba(255, 110, 50, 0.85) 0%, rgba(180, 50, 20, 0.55) 35%, rgba(60, 15, 10, 0.85) 70%, rgba(20, 8, 6, 1) 100%),
+      linear-gradient(180deg, #1a0908 0%, #2a0e0a 45%, #160806 100%);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Subtle dark grade so the hero blends into the page below */
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(13,8,7,0.55) 0%, rgba(13,8,7,0) 22%, rgba(13,8,7,0) 65%, rgba(13,8,7,0.95) 100%),
+      radial-gradient(ellipse at 50% 45%, transparent 35%, rgba(13,8,7,0.35) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Title raised toward top so silhouette is not covered */
+    justify-content: flex-start;
+    padding-top: 16vh;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 18px;
+    opacity: 0.85;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.02;
+    color: var(--cream);
+    letter-spacing: -0.005em;
+    max-width: 12ch;
+  }
+
+  .hero-cta {
+    margin-top: auto;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .discover {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    position: relative;
+    padding-bottom: 22px;
+  }
+
+  .discover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 14px;
+    background: var(--cream-faint);
+  }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy {
+    padding: 140px 24px 160px;
+    text-align: center;
+    background: var(--bg);
+  }
+
+  .philosophy-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 32px;
+  }
+
+  .philosophy-greek {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 48px;
+    letter-spacing: 0.01em;
+  }
+
+  .philosophy-body {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.7;
+    color: var(--cream-dim);
+    max-width: 620px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .nav { padding: 22px 28px; }
+    .nav-links { display: none; }
+    .hero-content { padding-top: 14vh; }
+    .hero-cta { margin-bottom: 60px; }
+    .philosophy { padding: 100px 24px 120px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="logo" href="#">METABALLO</a>
+    <div class="nav-links">
+      <a href="#heritage">Heritage</a>
+      <a href="#grill">The Grill</a>
+      <a href="#bar">The Bar</a>
+      <a href="#reservations">Reservations</a>
+    </div>
+    <a class="btn btn-solid" href="#reservations">Book a Table</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-image" role="img" aria-label="Warm ambient restaurant lighting"></div>
+    <div class="hero-vignette"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Metaballo</div>
+      <h1 class="hero-title">The Art of<br/>Transformation</h1>
+
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#reservations">Secure a Table</a>
+        <a class="discover" href="#philosophy">Discover</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy" class="philosophy">
+    <div class="philosophy-eyebrow">The Philosophy</div>
+    <div class="philosophy-greek">meta&beta;&aacute;&lambda;&lambda;&omega;</div>
+    <p class="philosophy-body">
+      To change, to turn about. Metaballo represents the profound act of &ldquo;throwing over&rdquo;&mdash;transforming raw elements into refined experiences through a radical shift in perspective. Here, the flame does not just cook; it transforms. The spirit does not just mix; it evolves.
+    </p>
+  </section>
+
+</body>
+</html>
