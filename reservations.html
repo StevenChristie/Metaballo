@@ -35,6 +35,10 @@
   a { color: inherit; text-decoration: none; }
   ::selection { background: var(--peach); color: var(--bg); }
 
+  /* Keyboard-focus ring. Form fields keep their own underline treatment. */
+  :focus-visible { outline: 2px solid var(--peach); outline-offset: 4px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; }
+
   .res-nav {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -62,6 +66,7 @@
 
   .res-page {
     min-height: 100vh;
+    min-height: 100dvh;
     display: grid;
     grid-template-columns: 1fr 1.1fr;
     align-items: stretch;
@@ -73,7 +78,7 @@
     overflow: hidden;
     padding: 140px 64px 80px;
     background-image:
-      url('assets/hero.avif'),
+      url('assets/lounge.jpg'),
       linear-gradient(160deg, #2a0e08 0%, #0d0807 100%);
     background-size: cover;
     background-position: center;
@@ -258,12 +263,28 @@
     line-height: 1.7;
   }
 
+  /* Laptop / small desktop */
+  @media (max-width: 1100px) {
+    .res-aside { padding: 120px 44px 64px; }
+    .res-form-panel { padding: 120px 48px 64px; }
+  }
+
+  /* Tablet — stack the two panels */
   @media (max-width: 900px) {
     .res-page { grid-template-columns: 1fr; }
-    .res-aside { min-height: 40vh; padding: 100px 28px 60px; }
-    .res-form-panel { padding: 80px 28px 60px; }
-    .res-nav { padding: 22px 28px; }
+    .res-aside { min-height: 42vh; padding: 104px 36px 56px; }
+    .res-form-panel { padding: 76px 36px 60px; }
+    .res-nav { padding: 20px 32px; }
+  }
+
+  /* Phones */
+  @media (max-width: 560px) {
+    .res-aside { min-height: 34vh; padding: 88px 22px 44px; }
+    .res-form-panel { padding: 56px 22px 52px; }
+    .res-nav { padding: 18px 22px; }
+    .logo { font-size: 18px; letter-spacing: 0.24em; }
     .form-grid { grid-template-columns: 1fr; gap: 18px; }
+    .submit-btn { margin-top: 28px; }
   }
 </style>
 </head>
@@ -354,7 +375,7 @@
 
             <div class="form-group">
               <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" required placeholder="+44 ..." />
+              <input type="tel" id="phone" name="phone" required placeholder="+27 ..." />
             </div>
 
             <div class="form-group form-group--full">

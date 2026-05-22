@@ -42,11 +42,17 @@
 
   ::selection { background: var(--peach); color: var(--bg); }
 
+  /* Keyboard-focus ring — visible for tab navigation, invisible to mouse users */
+  :focus-visible {
+    outline: 2px solid var(--peach);
+    outline-offset: 4px;
+  }
+
   /* ---------- NAVIGATION ---------- */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -89,6 +95,97 @@
 
   .nav-links a:hover { color: var(--peach); }
 
+  /* --- Mobile overlay navigation --- */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    margin: 0 auto;
+    background: var(--cream);
+    transition: transform 0.4s cubic-bezier(0.16,0.84,0.32,1),
+                opacity 0.25s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(11, 6, 5, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+  }
+  .nav-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .nav-overlay-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+  .nav-overlay-links a {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--cream);
+    padding: 4px 12px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: color 0.3s ease,
+                opacity 0.5s ease,
+                transform 0.5s cubic-bezier(0.16,0.84,0.32,1);
+  }
+  .nav-overlay.open .nav-overlay-links a { opacity: 1; transform: translateY(0); }
+  .nav-overlay.open .nav-overlay-links a:nth-child(1) { transition-delay: 0.08s; }
+  .nav-overlay.open .nav-overlay-links a:nth-child(2) { transition-delay: 0.14s; }
+  .nav-overlay.open .nav-overlay-links a:nth-child(3) { transition-delay: 0.20s; }
+  .nav-overlay.open .nav-overlay-links a:nth-child(4) { transition-delay: 0.26s; }
+  .nav-overlay.open .nav-overlay-links a:nth-child(5) { transition-delay: 0.32s; }
+  .nav-overlay.open .nav-overlay-links a:nth-child(6) { transition-delay: 0.40s; }
+  .nav-overlay-links a:hover { color: var(--peach); }
+  .nav-overlay-links a.nav-overlay-cta {
+    margin-top: 18px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #2a1810;
+    background: var(--peach);
+    padding: 16px 40px;
+  }
+  .nav-overlay-links a.nav-overlay-cta:hover { background: var(--peach-hover); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-overlay-links a { transform: none; transition-delay: 0s; }
+    .nav-toggle span { transition: none; }
+  }
+
   .btn {
     display: inline-block;
     padding: 14px 28px;
@@ -122,6 +219,7 @@
   .hero {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     min-height: 760px;
     overflow: hidden;
     background-color: #1a0a06;
@@ -179,7 +277,7 @@
     font-family: var(--serif);
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(48px, 7vw, 96px);
+    font-size: clamp(40px, 7vw, 96px);
     line-height: 1.02;
     color: var(--cream);
     letter-spacing: -0.005em;
@@ -223,10 +321,11 @@
   }
 
   .philosophy-eyebrow {
-    font-size: 10.5px;
-    letter-spacing: 0.5em;
+    font-size: 11px;
+    letter-spacing: 0.42em;
     text-transform: uppercase;
     color: var(--peach);
+    font-weight: 500;
     margin-bottom: 32px;
   }
 
@@ -443,7 +542,7 @@
     color: var(--peach);
     font-style: italic;
     white-space: nowrap;
-    min-width: 32px;
+    min-width: 56px;
     text-align: right;
   }
 
@@ -490,17 +589,17 @@
 
   .cocktail-card:nth-child(1) .cocktail-image {
     background-image:
-      url('assets/cocktail-metamorphosis.jpg'),
+      url('assets/cocktailmetamorphosis.jpg'),
       linear-gradient(160deg, #3a0e08 0%, #0d0403 100%);
   }
   .cocktail-card:nth-child(2) .cocktail-image {
     background-image:
-      url('assets/cocktail-catharsis.jpg'),
+      url('assets/cocktailcatharsis.jpg'),
       linear-gradient(160deg, #2a1408 0%, #0d0403 100%);
   }
   .cocktail-card:nth-child(3) .cocktail-image {
     background-image:
-      url('assets/cocktail-apotheosis.jpg'),
+      url('assets/cocktailapotheosis.jpg'),
       linear-gradient(160deg, #38180a 0%, #0d0403 100%);
   }
 
@@ -567,6 +666,7 @@
   .lounge {
     position: relative;
     min-height: 90vh;
+    min-height: 90dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -888,23 +988,108 @@
     }
   }
 
-  /* ---------- RESPONSIVE ---------- */
+  /* ---------- TYPOGRAPHIC REFINEMENT ---------- */
+  /* Balanced multi-line headings; no single-word orphans in body copy. */
+  .hero-title, .philosophy-greek, .section-title,
+  .lounge-title, .cocktail-name, .menu-category-name {
+    text-wrap: balance;
+  }
+  .philosophy-body, .heritage-body p, .bar-intro,
+  .cocktail-desc, .lounge-body p, .menu-item-desc,
+  .pull-quote, .cellar-block p, .footer-brand p {
+    text-wrap: pretty;
+  }
+
+  /* ============================================================
+     RESPONSIVE  —  desktop-first.
+     Content caps at 1280px (.section-inner). Breakpoints step
+     padding, type and grids down; mobile overlay nav at 900px.
+     ============================================================ */
+
+  /* Large monitors — wider content column, more side air */
+  @media (min-width: 1700px) {
+    .section-inner,
+    .footer-inner,
+    .footer-legal { max-width: 1380px; }
+    .section { padding-left: 72px; padding-right: 72px; }
+  }
+
+  /* Laptop / small desktop */
+  @media (max-width: 1180px) {
+    .nav { padding: 24px 40px; }
+    .nav.scrolled { padding: 16px 40px; }
+    .section { padding: 120px 40px; }
+    .heritage-grid { gap: 56px; }
+    .menu-grid { gap: 40px; }
+    .cocktail-grid { gap: 30px; }
+    .footer { padding: 72px 40px 36px; }
+  }
+
+  /* Narrow desktop — shrink nav so all links still fit */
+  @media (max-width: 1024px) {
+    .logo { font-size: 19px; letter-spacing: 0.26em; }
+    .nav-links { gap: 24px; margin-left: 30px; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.18em; }
+    .btn { padding: 12px 22px; }
+  }
+
+  /* Tablet & mobile — overlay nav, single-column layouts */
   @media (max-width: 900px) {
-    .nav { padding: 22px 28px; }
-    .nav.scrolled { padding: 16px 28px; }
-    .nav-links { display: none; }
-    .hero-content { padding-top: 14vh; }
-    .hero-cta { margin-bottom: 60px; }
-    .philosophy { padding: 100px 24px 120px; }
-    .section { padding: 100px 28px; }
-    .heritage-grid { grid-template-columns: 1fr; gap: 48px; }
-    .menu-grid { grid-template-columns: 1fr; gap: 48px; }
-    .cocktail-grid { grid-template-columns: 1fr; gap: 56px; }
-    .bar-cellar { grid-template-columns: 1fr; gap: 36px; }
-    .visit-grid { grid-template-columns: 1fr; gap: 36px; }
-    .footer { padding: 60px 28px 32px; }
-    .footer-inner { grid-template-columns: 1fr; gap: 48px; }
+    .nav { padding: 20px 32px; }
+    .nav.scrolled { padding: 16px 32px; }
+    .nav-links,
+    .nav-book { display: none; }
+    .nav-toggle { display: flex; }
+
+    .hero { min-height: 600px; }
+    .hero-content { padding-top: 15vh; }
+    .hero-cta { margin-bottom: 56px; }
+
+    .section { padding: 96px 32px; }
+    .philosophy { padding: 96px 24px 110px; }
+
+    .heritage-grid { grid-template-columns: 1fr; gap: 44px; }
+    .menu-grid { grid-template-columns: 1fr; gap: 52px; }
+
+    .cocktail-grid { grid-template-columns: 1fr; gap: 48px; }
+    .cocktail-card { max-width: 400px; margin-left: auto; margin-right: auto; }
+
+    .bar-cellar { grid-template-columns: 1fr; gap: 32px; margin-top: 72px; }
+
+    .footer { padding: 64px 32px 32px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 44px; }
     .footer-legal { flex-direction: column; gap: 14px; text-align: center; }
+  }
+
+  /* Phones */
+  @media (max-width: 560px) {
+    .nav { padding: 18px 22px; }
+    .nav.scrolled { padding: 14px 22px; }
+    .logo { font-size: 18px; letter-spacing: 0.24em; }
+
+    .hero { min-height: 540px; }
+    .hero-content { padding-top: 17vh; }
+    .hero-eyebrow { font-size: 12px; letter-spacing: 0.4em; }
+    .hero-cta { margin-bottom: 44px; }
+
+    .section { padding: 72px 22px; }
+    .philosophy { padding: 72px 20px 84px; }
+    .section-title { margin-bottom: 36px; }
+
+    .pull-quote { margin-top: 40px; padding-top: 28px; }
+    .menu-footnote { margin-top: 56px; }
+
+    .visit-grid { grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px; }
+
+    .nav-overlay-links { gap: 22px; }
+    .nav-overlay-links a { font-size: 27px; }
+  }
+
+  /* Small phones */
+  @media (max-width: 360px) {
+    .section { padding: 56px 16px; }
+    .hero-eyebrow { letter-spacing: 0.3em; }
+    .nav-overlay-links a { font-size: 24px; }
   }
 </style>
 </head>
@@ -919,8 +1104,22 @@
       <a href="#lounge">The Lounge</a>
       <a href="#visit">Visit</a>
     </div>
-    <a class="btn btn-solid" href="reservations.html">Book a Table</a>
+    <a class="btn btn-solid nav-book" href="reservations.html">Book a Table</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <nav class="nav-overlay-links" aria-label="Mobile navigation">
+      <a href="#heritage">Heritage</a>
+      <a href="#menu">Menu</a>
+      <a href="#bar">The Bar</a>
+      <a href="#lounge">The Lounge</a>
+      <a href="#visit">Visit</a>
+      <a href="reservations.html" class="nav-overlay-cta">Book a Table</a>
+    </nav>
+  </div>
 
   <section class="hero">
     <div class="hero-image" role="img" aria-label="Warm ambient restaurant lighting"></div>
@@ -964,7 +1163,7 @@
 
           <div class="pull-quote">
             &ldquo;Cooking is not a recipe. It is a verb.&rdquo;
-            <span class="pull-quote-attr">&mdash; Chef &mdash; [ Your Name ]</span>
+            <span class="pull-quote-attr">Chef &mdash; [ Your Name ]</span>
           </div>
         </div>
 
@@ -995,7 +1194,7 @@
                 <div class="menu-item-name">Garides Saganaki</div>
                 <div class="menu-item-desc">Tiger prawns, vine tomato, aged feta, ouzo flame</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R285</div>
             </li>
 
             <li class="menu-item">
@@ -1003,7 +1202,7 @@
                 <div class="menu-item-name">Crayfish Spetsai</div>
                 <div class="menu-item-desc">Whole crayfish, Cretan oil, dill, lemon</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R465</div>
             </li>
 
             <li class="menu-item">
@@ -1011,7 +1210,7 @@
                 <div class="menu-item-name">Lavraki</div>
                 <div class="menu-item-desc">Whole sea bass, salt-baked, wild oregano</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R460</div>
             </li>
 
             <li class="menu-item">
@@ -1019,7 +1218,7 @@
                 <div class="menu-item-name">Octopus &amp; Fava</div>
                 <div class="menu-item-desc">Charred octopus, yellow split pea, caper berries</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R215</div>
             </li>
 
             <li class="menu-item">
@@ -1027,7 +1226,7 @@
                 <div class="menu-item-name">Yellowfin Crudo</div>
                 <div class="menu-item-desc">Sashimi cut, citrus, Kalamata oil, sea salt</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R255</div>
             </li>
 
             <li class="menu-item">
@@ -1035,7 +1234,7 @@
                 <div class="menu-item-name">Mussels Mavrodaphne</div>
                 <div class="menu-item-desc">Cretan red wine, leek, smoked tomato</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R185</div>
             </li>
 
           </ul>
@@ -1055,7 +1254,7 @@
                 <div class="menu-item-name">Bone-in Ribeye</div>
                 <div class="menu-item-desc">60-day aged, oak-grilled, Maldon, bone marrow</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R595</div>
             </li>
 
             <li class="menu-item">
@@ -1063,7 +1262,7 @@
                 <div class="menu-item-name">Lamb Kleftiko</div>
                 <div class="menu-item-desc">Slow-cooked seven hours, paper-wrapped, lemon</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R475</div>
             </li>
 
             <li class="menu-item">
@@ -1071,7 +1270,7 @@
                 <div class="menu-item-name">Tomahawk for Two</div>
                 <div class="menu-item-desc">1.2kg dry-aged, charcoal, smoked olive oil</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R1&nbsp;450</div>
             </li>
 
             <li class="menu-item">
@@ -1079,7 +1278,7 @@
                 <div class="menu-item-name">Mountain Pork</div>
                 <div class="menu-item-desc">Wood-grilled, wild thyme, mustard greens</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R365</div>
             </li>
 
             <li class="menu-item">
@@ -1087,7 +1286,7 @@
                 <div class="menu-item-name">Wagyu Picanha</div>
                 <div class="menu-item-desc">Vine-leaf wrapped, sea salt, fresh oregano</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R720</div>
             </li>
 
             <li class="menu-item">
@@ -1095,7 +1294,7 @@
                 <div class="menu-item-name">Souvlaki Megalo</div>
                 <div class="menu-item-desc">Free-range chicken, charcoal, lemon, pita</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R295</div>
             </li>
 
           </ul>
@@ -1115,7 +1314,7 @@
                 <div class="menu-item-name">Burrata &amp; Fig</div>
                 <div class="menu-item-desc">Roasted black fig, pistachio, thyme honey</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R165</div>
             </li>
 
             <li class="menu-item">
@@ -1123,7 +1322,7 @@
                 <div class="menu-item-name">Spanakopita</div>
                 <div class="menu-item-desc">Wild mountain greens, feta, hand-pulled phyllo</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R125</div>
             </li>
 
             <li class="menu-item">
@@ -1131,7 +1330,7 @@
                 <div class="menu-item-name">Saganaki Flambé</div>
                 <div class="menu-item-desc">Kefalograviera, brandy flame, lemon zest</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R145</div>
             </li>
 
             <li class="menu-item">
@@ -1139,7 +1338,7 @@
                 <div class="menu-item-name">Wild Mushroom</div>
                 <div class="menu-item-desc">Porcini, oyster, black truffle, sourdough</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R155</div>
             </li>
 
             <li class="menu-item">
@@ -1147,7 +1346,7 @@
                 <div class="menu-item-name">Heirloom Tomato</div>
                 <div class="menu-item-desc">Aged balsamic, basil, caper berry, olive oil</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R125</div>
             </li>
 
             <li class="menu-item">
@@ -1155,7 +1354,7 @@
                 <div class="menu-item-name">Charred Aubergine</div>
                 <div class="menu-item-desc">Greek yogurt, pomegranate, dukkah</div>
               </div>
-              <div class="menu-item-price">&mdash;</div>
+              <div class="menu-item-price">R115</div>
             </li>
 
           </ul>
@@ -1216,7 +1415,7 @@
 
         <div class="cellar-block">
           <div class="cellar-block-title">The Cellar</div>
-          <p>Two hundred labels strong. Greek indigenous varieties &mdash; Assyrtiko, Xinomavro, Agiorgitiko &mdash; sit beside the great houses of Burgundy, Piedmont, and the Mosel. Curated to elevate, never to overpower.</p>
+          <p>Two hundred labels strong. Greek indigenous varieties &mdash; Assyrtiko, Xinomavro, Agiorgitiko &mdash; sit beside the great estates of the Cape Winelands: Stellenbosch, Franschhoek, and Constantia. Curated to elevate, never to overpower.</p>
         </div>
 
         <div class="cellar-block">
@@ -1260,7 +1459,7 @@
 
         <div class="visit-block">
           <div class="visit-block-label">Address</div>
-          <p>[ Street Address ]<br/>[ City, Postcode ]<br/>[ Country ]</p>
+          <p>Victoria Road<br/>Camps Bay, Cape Town 8005<br/>South Africa</p>
         </div>
 
         <div class="visit-block">
@@ -1323,16 +1522,140 @@
   </footer>
 
   <script>
-    // Sticky nav: dark backdrop appears once user scrolls past the hero
     (function() {
+
+      /* ---------- Sticky nav backdrop ---------- */
       const nav = document.getElementById('nav');
-      const threshold = 80;
-      function update() {
-        if (window.scrollY > threshold) nav.classList.add('scrolled');
+      const navThreshold = 80;
+      function updateNav() {
+        if (window.scrollY > navThreshold) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
       }
-      update();
-      window.addEventListener('scroll', update, { passive: true });
+      updateNav();
+      window.addEventListener('scroll', updateNav, { passive: true });
+
+      /* ---------- Mobile overlay navigation ---------- */
+      const navToggle = document.getElementById('navToggle');
+      const navOverlay = document.getElementById('navOverlay');
+      if (navToggle && navOverlay) {
+        const setMenu = (open) => {
+          navToggle.classList.toggle('open', open);
+          navOverlay.classList.toggle('open', open);
+          navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+          navOverlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+          document.body.style.overflow = open ? 'hidden' : '';
+        };
+        navToggle.addEventListener('click', () => {
+          setMenu(!navOverlay.classList.contains('open'));
+        });
+        navOverlay.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => setMenu(false));
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') setMenu(false);
+        });
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 900) setMenu(false);
+        }, { passive: true });
+      }
+
+      /* ---------- Honour reduced-motion preference ---------- */
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+
+      /* ---------- Scroll-triggered reveals ---------- */
+      // Selectors of elements we want to fade-up as they enter the viewport.
+      const revealSelectors = [
+        '.philosophy-eyebrow',
+        '.philosophy-greek',
+        '.philosophy-body',
+        '.heritage-image',
+        '.heritage-body .eyebrow',
+        '.heritage-body .section-title',
+        '.heritage-body p',
+        '.pull-quote',
+        '.menu .eyebrow',
+        '.menu .section-title',
+        '.menu-category',
+        '.menu-footnote',
+        '.bar .eyebrow',
+        '.bar .section-title',
+        '.bar-intro',
+        '.cocktail-card',
+        '.cellar-block',
+        '.lounge .eyebrow',
+        '.lounge-title',
+        '.lounge-body p',
+        '.lounge-enquire',
+        '.visit .eyebrow',
+        '.visit .section-title',
+        '.visit-block',
+        '.visit-cta',
+        '.footer-brand',
+        '.footer-col'
+      ];
+
+      const revealEls = document.querySelectorAll(revealSelectors.join(','));
+      revealEls.forEach(el => el.classList.add('reveal'));
+
+      // Stagger grid children so they enter in sequence rather than all at once.
+      const staggerGroups = [
+        { parent: '.menu-grid',     child: '.menu-category', step: 0.10 },
+        { parent: '.cocktail-grid', child: '.cocktail-card', step: 0.12 },
+        { parent: '.bar-cellar',    child: '.cellar-block',  step: 0.10 },
+        { parent: '.visit-grid',    child: '.visit-block',   step: 0.08 },
+        { parent: '.footer-inner',  child: '.footer-col',    step: 0.08 }
+      ];
+      staggerGroups.forEach(group => {
+        document.querySelectorAll(group.parent + ' > ' + group.child).forEach((el, i) => {
+          el.style.transitionDelay = (i * group.step) + 's';
+        });
+      });
+
+      // Stagger Heritage column entries too — eyebrow, title, paragraphs, quote.
+      document.querySelectorAll('.heritage-body > .reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.08) + 's';
+      });
+
+      // Stagger Lounge inner elements.
+      document.querySelectorAll('.lounge-inner .reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.10) + 's';
+      });
+
+      // IntersectionObserver — flips elements on as they enter the viewport.
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      revealEls.forEach(el => io.observe(el));
+
+      /* ---------- Active nav section highlight ---------- */
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const sectionIds = ['heritage', 'menu', 'bar', 'lounge', 'visit'];
+      const sections = sectionIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+      function updateActive() {
+        const triggerY = window.scrollY + 140; // accounts for nav height + breathing room
+        let activeId = null;
+        sections.forEach(section => {
+          if (section.offsetTop <= triggerY) activeId = section.id;
+        });
+        navLinks.forEach(a => {
+          a.classList.toggle('is-active', a.getAttribute('href') === '#' + activeId);
+        });
+      }
+      updateActive();
+      window.addEventListener('scroll', updateActive, { passive: true });
+      window.addEventListener('resize', updateActive, { passive: true });
+
     })();
   </script>
 
