@@ -146,3 +146,4 @@ firebase login:ci   # prints a token
 - The hero uses `.avif` format for optimal compression
 - No frameworks, no bundler — plain HTML, CSS, and vanilla JS
 - The `404.html` is served automatically by Firebase Hosting on unmatched routes
+
