@@ -215,16 +215,19 @@ body::after {
 
 /* EQ bars — small animated equaliser under the title */
 .hero-eq {
+  position: absolute;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: flex-end;
-  gap: 3px;
-  height: 18px;
-  margin-top: 28px;
+  gap: 10px;
+  height: 108px;
 }
 .eq-bar {
-  width: 3px;
+  width: 14px;
   background: var(--red);
-  border-radius: 1px;
+  border-radius: 2px;
   opacity: 0.7;
   animation: eqBounce var(--d) ease-in-out infinite alternate;
 }
