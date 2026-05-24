@@ -42,7 +42,6 @@
     <div class="hero-vignette"></div>
 
     <div class="hero-content">
-      <div class="hero-eyebrow">Metaballo</div>
       <h1 class="hero-title">The Art of<br/>Transformation</h1>
 
       <div class="hero-cta">
@@ -354,20 +353,13 @@
 
   <!-- ====================== THE LOUNGE ====================== -->
   <section id="lounge" class="lounge">
-    
+
     <img class="lounge-bg" src="assets/speakeasy.jpg" alt="Dim lounge interior, atmospheric">
     <div class="lounge-overlay"></div>
 
     <div class="lounge-inner">
-      <div class="eyebrow">The Lounge <span class="greek">/ μυστικό</span></div>
       <h2 class="lounge-title">An unmarked door</h2>
-
-      <div class="lounge-body">
-        <p>Behind the kitchen lies a room without a sign. Brass fittings, low ceilings, slower nights.</p>
-        <p>Live music Thursday through Saturday. Small plates and cocktails until late.</p>
-      </div>
-
-      <a class="lounge-enquire" href="mailto:lounge@metaballo.com">Enquire</a>
+      <a class="lounge-enter" href="club.html">Enter</a>
     </div>
 
   </section>
@@ -508,10 +500,8 @@
         '.bar-intro',
         '.cocktail-card',
         '.cellar-block',
-        '.lounge .eyebrow',
         '.lounge-title',
-        '.lounge-body p',
-        '.lounge-enquire',
+        '.lounge-enter',
         '.visit .eyebrow',
         '.visit .section-title',
         '.visit-block',
@@ -544,7 +534,7 @@
 
       // Stagger Lounge inner elements.
       document.querySelectorAll('.lounge-inner .reveal').forEach((el, i) => {
-        el.style.transitionDelay = (i * 0.10) + 's';
+        el.style.transitionDelay = (i * 0.15) + 's';
       });
 
       // IntersectionObserver — flips elements on as they enter the viewport.
@@ -580,6 +570,35 @@
       window.addEventListener('scroll', updateActive, { passive: true });
       window.addEventListener('resize', updateActive, { passive: true });
 
+    })();
+  </script>
+
+  <!-- ====================== ZOOM TRANSITION OVERLAY ====================== -->
+  <div id="zoomOverlay" style="position:fixed;inset:0;z-index:9000;background:#080204;opacity:0;pointer-events:none;transition:opacity 0.7s ease;"></div>
+
+  <script>
+    (function () {
+      var enterLink = document.querySelector('.lounge-enter');
+      if (!enterLink) return;
+
+      enterLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        var dest = this.href;
+        var overlay = document.getElementById('zoomOverlay');
+
+        var centerY = window.scrollY + window.innerHeight / 2;
+        document.body.style.transformOrigin = '50% ' + centerY + 'px';
+        document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.6,1)';
+        document.body.style.transform = 'scale(1.12)';
+
+        overlay.style.transition = 'opacity 0.35s ease';
+        overlay.style.pointerEvents = 'all';
+        overlay.style.opacity = '1';
+
+        setTimeout(function () {
+          window.location.href = dest;
+        }, 420);
+      });
     })();
   </script>
 
