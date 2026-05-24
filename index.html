@@ -21,7 +21,7 @@
       <a href="#lounge">The Lounge</a>
       <a href="#visit">Visit</a>
     </div>
-    <a class="btn btn-solid nav-book" href="reservations.html">Book a Table</a>
+    <a class="btn nav-book" href="reservations.html">Book a Table</a>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
       <span></span><span></span><span></span>
     </button>
@@ -335,18 +335,8 @@
 
       </div>
 
-      <div class="bar-cellar">
-
-        <div class="cellar-block">
-          <div class="cellar-block-title">The Cellar</div>
-          <p>Two hundred labels strong. Greek indigenous varieties &mdash; Assyrtiko, Xinomavro, Agiorgitiko &mdash; sit beside the great estates of the Cape Winelands: Stellenbosch, Franschhoek, and Constantia. Curated to elevate, never to overpower.</p>
-        </div>
-
-        <div class="cellar-block">
-          <div class="cellar-block-title">The Library</div>
-          <p>A spirits room of rare aged Metaxa, single-cask whiskies, and small-batch tsipouro. Tastings by appointment &mdash; an evening with our sommelier, a conversation in glass.</p>
-        </div>
-
+      <div class="bar-menu-cta">
+        <a class="btn" href="#" id="drinksMenuBtn">View Drinks Menu</a>
       </div>
 
     </div>
@@ -372,21 +362,21 @@
       <div class="eyebrow">Visit <span class="greek">/ ἐπίσκεψις</span></div>
       <h2 class="section-title">Find us</h2>
 
-      <div class="visit-grid">
+      <div class="visit-rows">
 
-        <div class="visit-block">
-          <div class="visit-block-label">Address</div>
-          <p>Victoria Road<br/>Camps Bay, Cape Town 8005<br/>South Africa</p>
+        <div class="visit-row">
+          <div class="visit-row-label">Address</div>
+          <div class="visit-row-content">Victoria Road &nbsp;&middot;&nbsp; Camps Bay, Cape Town 8005 &nbsp;&middot;&nbsp; South Africa</div>
         </div>
 
-        <div class="visit-block">
-          <div class="visit-block-label">Hours</div>
-          <p>Tuesday &mdash; Thursday<br/>18:00 &mdash; 23:00<br/><br/>Friday &amp; Saturday<br/>18:00 &mdash; 01:00</p>
+        <div class="visit-row">
+          <div class="visit-row-label">Hours</div>
+          <div class="visit-row-content">Tuesday &mdash; Thursday &nbsp; 18:00 &mdash; 23:00 &nbsp;&nbsp;&middot;&nbsp;&nbsp; Friday &amp; Saturday &nbsp; 18:00 &mdash; 01:00</div>
         </div>
 
-        <div class="visit-block">
-          <div class="visit-block-label">Attire</div>
-          <p>Smart, considered.<br/>Jackets encouraged.<br/>The Lounge requires the same.</p>
+        <div class="visit-row">
+          <div class="visit-row-label">Attire</div>
+          <div class="visit-row-content">Smart, considered. Jackets encouraged. The Lounge requires the same.</div>
         </div>
 
       </div>
@@ -519,7 +509,7 @@
         '.lounge-enter',
         '.visit .eyebrow',
         '.visit .section-title',
-        '.visit-block',
+        '.visit-row',
         '.visit-cta',
         '.footer-brand',
         '.footer-col'
@@ -532,8 +522,7 @@
       const staggerGroups = [
         { parent: '.menu-grid',     child: '.menu-category', step: 0.10 },
         { parent: '.cocktail-grid', child: '.cocktail-card', step: 0.12 },
-        { parent: '.bar-cellar',    child: '.cellar-block',  step: 0.10 },
-        { parent: '.visit-grid',    child: '.visit-block',   step: 0.08 },
+        { parent: '.visit-rows',    child: '.visit-row',     step: 0.08 },
         { parent: '.footer-inner',  child: '.footer-col',    step: 0.08 }
       ];
       staggerGroups.forEach(group => {
@@ -586,6 +575,41 @@
 
   <!-- Zoom transition overlay — styled via styles.css #zoomOverlay -->
   <div id="zoomOverlay"></div>
+
+  <!-- Drinks menu coming-soon modal -->
+  <div id="drinksModal" class="drinks-modal" role="dialog" aria-modal="true" aria-label="Drinks menu" hidden>
+    <div class="drinks-modal-inner">
+      <button class="drinks-modal-close" id="drinksModalClose" aria-label="Close">&times;</button>
+      <h2 class="drinks-modal-title">The Drinks Menu</h2>
+      <p class="drinks-modal-body">Something Special is Coming Soon.</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const btn   = document.getElementById('drinksMenuBtn');
+      const modal = document.getElementById('drinksModal');
+      const close = document.getElementById('drinksModalClose');
+
+      function openModal(e) {
+        e.preventDefault();
+        modal.hidden = false;
+        requestAnimationFrame(() => modal.classList.add('is-open'));
+        close.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.addEventListener('transitionend', () => { modal.hidden = true; }, { once: true });
+        btn.focus();
+      }
+
+      btn.addEventListener('click', openModal);
+      close.addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+    })();
+  </script>
 
 </body>
 </html>

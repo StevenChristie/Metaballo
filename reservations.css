@@ -231,19 +231,22 @@ textarea { resize: vertical; min-height: 90px; font-family: var(--serif); font-s
   margin-top: 36px;
   padding: 18px 0;
   width: 100%;
-  background: var(--peach);
-  color: #2a1810;
-  border: 0;
+  background: transparent;
+  color: var(--peach);
+  border: 1px solid var(--peach);
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.submit-btn:hover { background: var(--peach-hover); }
+.submit-btn:hover {
+  background: var(--peach);
+  color: #2a1810;
+}
 
 .form-footnote {
   margin-top: 28px;
