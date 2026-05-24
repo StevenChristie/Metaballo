@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Metaballo &mdash; The Art of Transformation</title>
+<meta name="description" content="Metaballo — a Greek-Mediterranean fire kitchen and cocktail bar in Camps Bay, Cape Town. Reservations open Tuesday to Saturday from 18:00." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -65,7 +66,7 @@
 
         <!-- TODO: Save photograph to assets/heritage.jpg (recommended: open kitchen / live fire / clay oven, 1200x1500 or similar 4:5 portrait) -->
         <div class="frame heritage-image">
-          <img src="assets/heritage.jpg" alt="Open kitchen with live fire">
+          <img src="assets/heritage.jpg" alt="Open kitchen with live fire" loading="lazy">
         </div>
 
         <div class="heritage-body">
@@ -92,8 +93,8 @@
   <section id="menu" class="section menu">
     <div class="section-inner">
 
-      <div class="eyebrow" style="text-align:center;">Menu <span class="greek">/ φωτιά</span></div>
-      <h2 class="section-title" style="text-align:center;">The transformation<br/>of fire</h2>
+      <div class="eyebrow">Menu <span class="greek">/ φωτιά</span></div>
+      <h2 class="section-title">The transformation<br/>of fire</h2>
 
       <div class="menu-grid">
 
@@ -302,7 +303,7 @@
         <div class="cocktail-card">
           <!-- TODO: Save photograph to assets/cocktailmetamorphosis.jpg (3:4 portrait, mezcal-based drink, smoky/warm tones) -->
           <div class="cocktail-image">
-            <img src="assets/cocktailmetamorphosis.jpg" alt="Metamorphosis cocktail">
+            <img src="assets/cocktailmetamorphosis.jpg" alt="Metamorphosis cocktail" loading="lazy">
           </div>
           <div class="cocktail-greek">μεταμόρφωσις</div>
           <div class="cocktail-name">Metamorphosis</div>
@@ -313,7 +314,7 @@
         <div class="cocktail-card">
           <!-- TODO: Save photograph to assets/cocktailcatharsis.jpg (3:4 portrait, gin-based drink, cool/pale tones) -->
           <div class="cocktail-image">
-            <img src="assets/cocktailcatharsis.jpg" alt="Catharsis cocktail">
+            <img src="assets/cocktailcatharsis.jpg" alt="Catharsis cocktail" loading="lazy">
           </div>
           <div class="cocktail-greek">κάθαρσις</div>
           <div class="cocktail-name">Catharsis</div>
@@ -324,7 +325,7 @@
         <div class="cocktail-card">
           <!-- TODO: Save photograph to assets/cocktailapotheosis.jpg (3:4 portrait, whisky-based drink, deep amber) -->
           <div class="cocktail-image">
-            <img src="assets/cocktailapotheosis.jpg" alt="Apotheosis cocktail">
+            <img src="assets/cocktailapotheosis.jpg" alt="Apotheosis cocktail" loading="lazy">
           </div>
           <div class="cocktail-greek">ἀποθέωσις</div>
           <div class="cocktail-name">Apotheosis</div>
@@ -354,7 +355,7 @@
   <!-- ====================== THE LOUNGE ====================== -->
   <section id="lounge" class="lounge">
 
-    <img class="lounge-bg" src="assets/speakeasy.jpg" alt="Dim lounge interior, atmospheric">
+    <img class="lounge-bg" src="assets/speakeasy.jpg" alt="Dim lounge interior, atmospheric" loading="lazy">
     <div class="lounge-overlay"></div>
 
     <div class="lounge-inner">
@@ -368,8 +369,8 @@
   <section id="visit" class="section visit">
     <div class="section-inner">
 
-      <div class="eyebrow" style="text-align:center;">Visit <span class="greek">/ ἐπίσκεψις</span></div>
-      <h2 class="section-title" style="text-align:center;">Find us</h2>
+      <div class="eyebrow">Visit <span class="greek">/ ἐπίσκεψις</span></div>
+      <h2 class="section-title">Find us</h2>
 
       <div class="visit-grid">
 
@@ -416,16 +417,16 @@
       </div>
 
       <div class="footer-col">
-        <div class="footer-col-title">Tales from the kitchen <span style="opacity:0.6;">— μηνιαία</span></div>
-        <p style="font-family:var(--serif); font-style:italic; font-size:14px; color:var(--cream-dim); line-height:1.6;">Monthly. Stories, seasonal menus, lounge nights.</p>
+        <div class="footer-col-title">Tales from the kitchen <span class="footer-col-title-greek">— μηνιαία</span></div>
+        <p class="footer-newsletter-desc">Monthly. Stories, seasonal menus, lounge nights.</p>
         <form class="newsletter" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='Thank you'; setTimeout(()=>this.querySelector('button').textContent='Subscribe', 2200);">
           <input type="email" placeholder="your@email" required />
           <button type="submit">Subscribe</button>
         </form>
-        <div style="margin-top:24px; display:flex; gap:18px;">
-          <a href="#" aria-label="Instagram" style="font-family:var(--serif); font-style:italic; font-size:14px; color:var(--cream-dim);">Instagram</a>
-          <span style="color:var(--cream-faint);">/</span>
-          <a href="#" aria-label="Email" style="font-family:var(--serif); font-style:italic; font-size:14px; color:var(--cream-dim);">hello@metaballo.com</a>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <span class="footer-social-sep">/</span>
+          <a href="mailto:hello@metaballo.com" aria-label="Email">hello@metaballo.com</a>
         </div>
       </div>
 
@@ -442,10 +443,8 @@
 
       /* ---------- Sticky nav backdrop ---------- */
       const nav = document.getElementById('nav');
-      const navThreshold = 80;
       function updateNav() {
-        if (window.scrollY > navThreshold) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
+        nav.classList.toggle('scrolled', window.scrollY > 80);
       }
       updateNav();
       window.addEventListener('scroll', updateNav, { passive: true });
@@ -465,10 +464,10 @@
         navToggle.addEventListener('click', () => {
           setMenu(!navOverlay.classList.contains('open'));
         });
-        navOverlay.querySelectorAll('a').forEach((link) => {
+        navOverlay.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => setMenu(false));
         });
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', e => {
           if (e.key === 'Escape') setMenu(false);
         });
         window.addEventListener('resize', () => {
@@ -476,12 +475,28 @@
         }, { passive: true });
       }
 
+      /* ---------- Lounge "Enter" zoom transition ---------- */
+      const enterLink = document.querySelector('.lounge-enter');
+      const zoomOverlay = document.getElementById('zoomOverlay');
+      if (enterLink && zoomOverlay) {
+        enterLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          const dest = this.href;
+          const centerY = window.scrollY + window.innerHeight / 2;
+          document.body.style.transformOrigin = '50% ' + centerY + 'px';
+          document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.6,1)';
+          document.body.style.transform = 'scale(1.12)';
+          zoomOverlay.style.pointerEvents = 'all';
+          zoomOverlay.style.opacity = '1';
+          setTimeout(() => { window.location.href = dest; }, 420);
+        });
+      }
+
       /* ---------- Honour reduced-motion preference ---------- */
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
 
       /* ---------- Scroll-triggered reveals ---------- */
-      // Selectors of elements we want to fade-up as they enter the viewport.
       const revealSelectors = [
         '.philosophy-eyebrow',
         '.philosophy-greek',
@@ -513,7 +528,7 @@
       const revealEls = document.querySelectorAll(revealSelectors.join(','));
       revealEls.forEach(el => el.classList.add('reveal'));
 
-      // Stagger grid children so they enter in sequence rather than all at once.
+      // Stagger grid children so they enter in sequence
       const staggerGroups = [
         { parent: '.menu-grid',     child: '.menu-category', step: 0.10 },
         { parent: '.cocktail-grid', child: '.cocktail-card', step: 0.12 },
@@ -527,17 +542,14 @@
         });
       });
 
-      // Stagger Heritage column entries too — eyebrow, title, paragraphs, quote.
       document.querySelectorAll('.heritage-body > .reveal').forEach((el, i) => {
         el.style.transitionDelay = (i * 0.08) + 's';
       });
 
-      // Stagger Lounge inner elements.
       document.querySelectorAll('.lounge-inner .reveal').forEach((el, i) => {
         el.style.transitionDelay = (i * 0.15) + 's';
       });
 
-      // IntersectionObserver — flips elements on as they enter the viewport.
       const io = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -551,13 +563,12 @@
 
       /* ---------- Active nav section highlight ---------- */
       const navLinks = document.querySelectorAll('.nav-links a');
-      const sectionIds = ['heritage', 'menu', 'bar', 'lounge', 'visit'];
-      const sections = sectionIds
+      const sections = ['heritage', 'menu', 'bar', 'lounge', 'visit']
         .map(id => document.getElementById(id))
         .filter(Boolean);
 
       function updateActive() {
-        const triggerY = window.scrollY + 140; // accounts for nav height + breathing room
+        const triggerY = window.scrollY + 140;
         let activeId = null;
         sections.forEach(section => {
           if (section.offsetTop <= triggerY) activeId = section.id;
@@ -573,34 +584,8 @@
     })();
   </script>
 
-  <!-- ====================== ZOOM TRANSITION OVERLAY ====================== -->
-  <div id="zoomOverlay" style="position:fixed;inset:0;z-index:9000;background:#080204;opacity:0;pointer-events:none;transition:opacity 0.7s ease;"></div>
-
-  <script>
-    (function () {
-      var enterLink = document.querySelector('.lounge-enter');
-      if (!enterLink) return;
-
-      enterLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        var dest = this.href;
-        var overlay = document.getElementById('zoomOverlay');
-
-        var centerY = window.scrollY + window.innerHeight / 2;
-        document.body.style.transformOrigin = '50% ' + centerY + 'px';
-        document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.6,1)';
-        document.body.style.transform = 'scale(1.12)';
-
-        overlay.style.transition = 'opacity 0.35s ease';
-        overlay.style.pointerEvents = 'all';
-        overlay.style.opacity = '1';
-
-        setTimeout(function () {
-          window.location.href = dest;
-        }, 420);
-      });
-    })();
-  </script>
+  <!-- Zoom transition overlay — styled via styles.css #zoomOverlay -->
+  <div id="zoomOverlay"></div>
 
 </body>
 </html>
