@@ -104,6 +104,7 @@ body::after {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: auto;
   transition: color 0.3s ease;
 }
 .nav-back::before {
@@ -116,6 +117,16 @@ body::after {
 }
 .nav-back:hover { color: var(--cream); }
 .nav-back:hover::before { width: 28px; }
+
+@media (max-width: 600px) {
+  .nav-back::before { display: none; }
+  .nav-back::after {
+    content: '←';
+    font-size: 13px;
+    order: -1;
+    letter-spacing: 0;
+  }
+}
 
 
 /* ─────────────────────────────────────────────────

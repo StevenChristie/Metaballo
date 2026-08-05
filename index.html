@@ -351,7 +351,30 @@
 
     <div class="lounge-inner">
       <h2 class="lounge-title">An unmarked door</h2>
-      <a class="lounge-enter" href="club.html">Enter</a>
+      <a class="lounge-enter" href="club.html" aria-label="Enter the lounge">
+        <svg class="door-svg" width="90" height="154" viewBox="0 0 90 154" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Arch (sweeping upward) -->
+          <path d="M 6,60 A 39,39 0 0 1 84,60" stroke="currentColor" stroke-width="1.9"/>
+          <!-- Left stile -->
+          <path d="M 6,60 C 5.2,92 5.4,120 6,150" stroke="currentColor" stroke-width="1.9"/>
+          <!-- Right stile -->
+          <path d="M 84,60 C 84.8,92 84.6,120 84,150" stroke="currentColor" stroke-width="1.9"/>
+          <!-- Sill -->
+          <path d="M 6,150 C 30,151.5 60,151.5 84,150" stroke="currentColor" stroke-width="1.9"/>
+          <!-- Lock rail (middle) -->
+          <path d="M 6,104 C 26,103 64,105 84,104" stroke="currentColor" stroke-width="1.4"/>
+          <!-- Upper panel — loose horizontal brush strokes -->
+          <path d="M 13,74  C 34,73.2 57,74.8 77,74"  stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+          <path d="M 13,83  C 36,82.3 55,83.7 77,83"  stroke="currentColor" stroke-width="0.55" opacity="0.38"/>
+          <path d="M 13,93  C 33,92.4 57,93.6 77,93"  stroke="currentColor" stroke-width="0.55" opacity="0.28"/>
+          <!-- Lower panel — loose horizontal brush strokes -->
+          <path d="M 13,116 C 35,115.3 56,116.7 77,116" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+          <path d="M 13,126 C 34,125.4 57,126.6 77,126" stroke="currentColor" stroke-width="0.55" opacity="0.38"/>
+          <path d="M 13,138 C 36,137.5 55,138.5 77,138" stroke="currentColor" stroke-width="0.55" opacity="0.28"/>
+          <!-- Knob (left side — hinge is on right) -->
+          <circle cx="23" cy="109" r="3.8" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+      </a>
     </div>
 
   </section>
